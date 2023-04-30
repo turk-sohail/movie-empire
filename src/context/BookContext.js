@@ -1,6 +1,6 @@
 import { createContext } from 'react';
-import { useState } from 'react';
-import bookService from './services';
+import { useState, useCallback } from 'react';
+import bookService from '../services/services';
 const BookContext = createContext();
 
 const Provider = ({ children }) => {
@@ -20,10 +20,10 @@ const Provider = ({ children }) => {
     setBooks(editedBooks);
   };
 
-  const fetchBooks = async () => {
+  const fetchBooks = useCallback(async () => {
     const response = await bookService.fetchBooks();
     setBooks(response.data);
-  };
+  }, []);
 
   const deleteBook = async (id) => {
     await bookService.deleteBook(id);
